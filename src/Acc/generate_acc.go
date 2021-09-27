@@ -38,3 +38,17 @@ func Rsa_keygen(lambda int) rsa_key {
 		q: *pk.Primes[1],
 	}
 }
+
+func Generate_Acc(key rsa_key, U []big.Int) big.Int {
+
+	Primes := make([]big.Int, len(U))
+	//p, q := key.p, key.q
+	G := key.G
+	for i, u := range U {
+		Primes[i] = Hprime(u)
+		G.Exp(&G, &Primes[i], &key.N)
+	}
+
+	return G
+
+}
