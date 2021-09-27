@@ -1,3 +1,3 @@
-module github.com/GarryFCR/RSA_ACCUMULATOR/src/Acc
+module RSA_Acc/src/github.com/man2706kum/RSA_ACCUMULATOR
 
-go 1.16
+go 1.15
