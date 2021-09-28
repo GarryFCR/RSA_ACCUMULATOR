@@ -6,15 +6,15 @@ import (
 	"math/big"
 )
 
-type rsa_key struct {
+type Rsa_key struct {
 	N big.Int //Z/nZ
 	G big.Int // Generator
-	p big.Int //prime 1
-	q big.Int //prime 2
+	P big.Int //prime 1
+	Q big.Int //prime 2
 
 }
 
-func Rsa_keygen(lambda int) rsa_key {
+func Rsa_keygen(lambda int) Rsa_key {
 
 	pk, _ := rsa.GenerateKey(rand.Reader, lambda)
 	var F *big.Int
@@ -31,15 +31,15 @@ func Rsa_keygen(lambda int) rsa_key {
 
 	G := new(big.Int).Exp(F, big.NewInt(2), pk.PublicKey.N)
 
-	return rsa_key{
+	return Rsa_key{
 		N: *N,
 		G: *G,
-		p: *pk.Primes[0],
-		q: *pk.Primes[1],
+		P: *pk.Primes[0],
+		Q: *pk.Primes[1],
 	}
 }
 
-func Generate_Acc(key rsa_key, U []big.Int) big.Int {
+func Generate_Acc(key Rsa_key, U []big.Int) big.Int {
 
 	Primes := make([]big.Int, len(U))
 	//p, q := key.p, key.q
