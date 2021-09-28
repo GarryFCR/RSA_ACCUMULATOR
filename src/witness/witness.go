@@ -3,19 +3,26 @@ package witness
 import (
 	"math/big"
 
-	Acc "./github.com/GarryFCR/RSA_ACCUMULATOR/src/Acc"
+	Acc "../Acc"
 )
 
-func Generate_witness(Accumulator, u big.Int, key Acc.Rsa_key) big.Int {
+//Generation of witness is multiplication of all primes mapped from members except the one we
+//are proving,prod(say) then,
+// Witness = G^prod(mod N)
+func Generate_witness(Accumulator, u big.Int, key Acc.Rsa_key, U []big.Int) big.Int {
 
-	e := Acc.Hprime(u)
 	N := key.N
-	q := key.Q
-	p := key.P
 
-	phi := new(big.Int).Mul(new(big.Int).Sub(&q, big.NewInt(1)), new(big.Int).Sub(&p, big.NewInt(1)))
+	Primes := make([]big.Int, len(U))
+	G := key.G
+	for i, u_dash := range U {
+		Primes[i] = Acc.Hprime(u_dash)
+		if u_dash.Cmp(&u) != 0 {
 
-	inverse := new(big.Int).ModInverse(&e, phi)
-	W := new(big.Int).Exp(&Accumulator, inverse, &N)
-	return *W
+			G.Exp(&G, &Primes[i], &N)
+		}
+
+	}
+
+	return G
 }

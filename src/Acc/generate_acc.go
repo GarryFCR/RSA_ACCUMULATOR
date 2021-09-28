@@ -9,8 +9,6 @@ import (
 type Rsa_key struct {
 	N big.Int //Z/nZ
 	G big.Int // Generator
-	P big.Int //prime 1
-	Q big.Int //prime 2
 
 }
 
@@ -34,21 +32,18 @@ func Rsa_keygen(lambda int) Rsa_key {
 	return Rsa_key{
 		N: *N,
 		G: *G,
-		P: *pk.Primes[0],
-		Q: *pk.Primes[1],
 	}
 }
 
 func Generate_Acc(key Rsa_key, U []big.Int) big.Int {
 
 	Primes := make([]big.Int, len(U))
-	//p, q := key.p, key.q
 	G := key.G
 	for i, u := range U {
 		Primes[i] = Hprime(u)
 		G.Exp(&G, &Primes[i], &key.N)
 	}
-
+	//fmt.Println(Primes)
 	return G
 
 }

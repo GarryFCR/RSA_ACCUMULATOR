@@ -18,6 +18,7 @@ func Fu(x big.Int) big.Int {
 	u := x
 	temp1 := new(big.Int).Add(&u, big.NewInt(2))
 	temp1.Mul(temp1, big.NewInt(2))
+	//fmt.Println(temp1)
 
 	temp2 := new(big.Int).Add(&u, big.NewInt(1))
 
@@ -34,7 +35,7 @@ func Fu(x big.Int) big.Int {
 	y := math.Pow((math.Log2(w) + float64(bit-1)), 2)
 
 	temp1.Mul(temp1, big.NewInt(int64(y)))
-
+	//fmt.Println("Fu:", x, temp1)
 	return *temp1
 
 }
@@ -46,17 +47,21 @@ func Hprime(u big.Int) big.Int {
 	Huj := Fu(u)
 	j := Fu(u)
 
+	var temp big.Int
 	for {
 
-		temp := Huj
-		temp.Add(&temp, &j)
-		if temp.ProbablyPrime(10) {
+		temp = Huj
+		//fmt.Println(u, j, temp)
+		prime := new(big.Int).Add(&temp, &j)
 
-			return temp
+		if prime.ProbablyPrime(10) {
+			//fmt.Println(u, prime)
+			return *prime
 
 		}
 
 		j.Add(&j, big.NewInt(1))
+
 	}
 	//return big.NewInt(-1)
 

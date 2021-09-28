@@ -6,11 +6,15 @@ import (
 	Acc "../Acc"
 )
 
-func Verify(u, W, Accumulator big.Int, key Acc.Rsa_key) bool {
+//Verification is simply
+//W^e (mod N) == Acc
+func Verify(u, W, Accumulator, N big.Int) bool {
+
 	e := Acc.Hprime(u)
-	N := key.N
-	if W.Exp(&W, &e, &N).Cmp(&Accumulator) == 0 {
-		return true
-	}
+	Acc_dash := new(big.Int).Exp(&W, &e, &N)
+
+	//fmt.Println("Acc calculated:", Acc_dash, "e:", e, "N:", N)
+
+	return Acc_dash.Cmp(&Accumulator) == 0
 
 }
