@@ -20,25 +20,28 @@ func main() {
 
 	//Generate the accumulator for th above set
 	Accumulator := Acc.Generate_Acc(key, U)
-	fmt.Println("Acc:", &Accumulator)
+	fmt.Println("Acc:", Accumulator)
 
 	//witness of a member
-	W1 := witness.Generate_witness(Accumulator, *big.NewInt(125), key, U)
+	W1 := witness.Generate_witness(*big.NewInt(125), key, U)
 
 	//Verification
-	if verify.Verify(*big.NewInt(125), W1, Accumulator, key.N) {
+	if verify.Verify(*big.NewInt(125), W1, Accumulator.Acc, key.N) {
 		fmt.Printf("%v is a valid member\n", big.NewInt(125))
 	} else {
 		fmt.Printf("%v is not a member\n", big.NewInt(125))
 	}
 
 	//witness of a non-member
-	W2 := witness.Generate_witness(Accumulator, *big.NewInt(127), key, U)
+	W2 := witness.Generate_witness(*big.NewInt(127), key, U)
 
-	if verify.Verify(*big.NewInt(15), W2, Accumulator, key.N) {
+	if verify.Verify(*big.NewInt(15), W2, Accumulator.Acc, key.N) {
 		fmt.Printf("%v is a valid member\n", big.NewInt(127))
 	} else {
 		fmt.Printf("%v is not a member\n", big.NewInt(127))
 	}
+
+	Accumulator.Add_member(*big.NewInt(127))
+	fmt.Println("Acc:", Accumulator)
 
 }

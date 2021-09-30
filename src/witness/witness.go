@@ -9,7 +9,7 @@ import (
 //Generation of witness is multiplication of all primes mapped from members except the one we
 //are proving,prod(say) then,
 // Witness = G^prod(mod N)
-func Generate_witness(Accumulator, u big.Int, key Acc.Rsa_key, U []big.Int) big.Int {
+func Generate_witness(u big.Int, key Acc.Rsa_key, U []big.Int) big.Int {
 
 	N := key.N
 
