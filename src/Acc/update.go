@@ -4,7 +4,7 @@ import (
 	"math/big"
 )
 
-func (c *Rsa_Acc) Add_member(u big.Int) {
+func (c *Rsa_Acc) Add_member(u big.Int, w *Witness_list) {
 
 	e := Hprime(u)
 	newAcc := new(big.Int).Exp(&c.Acc, &e, &c.N)
@@ -12,6 +12,7 @@ func (c *Rsa_Acc) Add_member(u big.Int) {
 	newSet := append(c.U[:], u)
 	c.Acc = *newAcc
 	c.U = newSet
+	w.Precompute_witness(c.G, c.U, c)
 
 }
 
