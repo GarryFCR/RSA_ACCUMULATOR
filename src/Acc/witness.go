@@ -1,9 +1,7 @@
-package witness
+package Acc
 
 import (
 	"math/big"
-
-	Acc "../Acc"
 )
 
 type Witness_list struct {
@@ -14,14 +12,14 @@ type Witness_list struct {
 //Generation of witness is multiplication of all primes mapped from members except the one we
 //are proving,prod(say) then,
 // Witness = G^prod(mod N)
-func Generate_witness(u big.Int, key Acc.Rsa_key, U []big.Int) big.Int {
+func Generate_witness(u big.Int, key Rsa_key, U []big.Int) big.Int {
 
 	N := key.N
 
 	Primes := make([]big.Int, len(U))
 	G := key.G
 	for i, u_dash := range U {
-		Primes[i] = Acc.Hprime(u_dash)
+		Primes[i] = Hprime(u_dash)
 		if u_dash.Cmp(&u) != 0 {
 
 			G.Exp(&G, &Primes[i], &N)
@@ -32,7 +30,7 @@ func Generate_witness(u big.Int, key Acc.Rsa_key, U []big.Int) big.Int {
 	return G
 }
 
-func (witness *Witness_list) Precompute_witness(G_prev big.Int, U []big.Int, accumulator *Acc.Rsa_Acc) {
+func (witness *Witness_list) Precompute_witness(G_prev big.Int, U []big.Int, accumulator *Rsa_Acc) {
 
 	if len(U) == 1 {
 		u := U[0]
@@ -49,13 +47,13 @@ func (witness *Witness_list) Precompute_witness(G_prev big.Int, U []big.Int, acc
 
 	for _, u := range B {
 
-		e1 := Acc.Hprime(u)
+		e1 := Hprime(u)
 		G1.Exp(&G1, &e1, &N)
 
 	}
 
 	for _, w := range A {
-		e2 := Acc.Hprime(w)
+		e2 := Hprime(w)
 		G2.Exp(&G2, &e2, &N)
 	}
 	//fmt.Println("A,B:", G1, G2)

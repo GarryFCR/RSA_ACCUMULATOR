@@ -6,7 +6,6 @@ import (
 
 	"./Acc"
 	verify "./verification"
-	witness "./witness"
 )
 
 func main() {
@@ -23,7 +22,7 @@ func main() {
 	fmt.Println("Acc:", Accumulator)
 
 	//witness of a member
-	W1 := witness.Generate_witness(*big.NewInt(125), key, U)
+	W1 := Acc.Generate_witness(*big.NewInt(125), key, U)
 
 	//Verification
 	if verify.Verify(*big.NewInt(125), W1, Accumulator.Acc, key.N) {
@@ -33,7 +32,7 @@ func main() {
 	}
 
 	//witness of a non-member
-	W2 := witness.Generate_witness(*big.NewInt(127), key, U)
+	W2 := Acc.Generate_witness(*big.NewInt(127), key, U)
 	if verify.Verify(*big.NewInt(15), W2, Accumulator.Acc, key.N) {
 		fmt.Printf("%v is a valid member\n", big.NewInt(127))
 	} else {
@@ -48,14 +47,14 @@ func main() {
 
 	//pre computation of witness-------------------------------------
 	list1 := make(map[string]big.Int, len(Accumulator.U))
-	w := &witness.Witness_list{Acc: Accumulator.Acc, List: list1}
+	w := &Acc.Witness_list{Acc: Accumulator.Acc, List: list1}
 
 	w.Precompute_witness(Accumulator.G, Accumulator.U, Accumulator)
 	fmt.Println("witness", w.List)
 	//fmt.Println("Set:", Accumulator.U)
-	W3 := witness.Generate_witness(*big.NewInt(123), key, Accumulator.U)
-	W4 := witness.Generate_witness(*big.NewInt(124), key, Accumulator.U)
-	W5 := witness.Generate_witness(*big.NewInt(125), key, Accumulator.U)
-	W6 := witness.Generate_witness(*big.NewInt(127), key, Accumulator.U)
+	W3 := Acc.Generate_witness(*big.NewInt(123), key, Accumulator.U)
+	W4 := Acc.Generate_witness(*big.NewInt(124), key, Accumulator.U)
+	W5 := Acc.Generate_witness(*big.NewInt(125), key, Accumulator.U)
+	W6 := Acc.Generate_witness(*big.NewInt(127), key, Accumulator.U)
 	fmt.Println("witnesses:", W3, W4, W5, W6)
 }
