@@ -6,7 +6,7 @@ import (
 
 	"./Acc"
 	verify "./verification"
-	"./witness"
+	witness"./witness"
 )
 
 func main() {
@@ -14,6 +14,8 @@ func main() {
 	//Generation of a Hidden group order
 	key := Acc.Rsa_keygen(12)
 	fmt.Println("Public Key:", &key)
+
+
 
 	//Example set
 	U := []big.Int{*big.NewInt(123), *big.NewInt(124), *big.NewInt(125), *big.NewInt(126)}
@@ -43,5 +45,9 @@ func main() {
 
 	Accumulator.Add_member(*big.NewInt(127))
 	fmt.Println("Acc:", Accumulator)
+
+
+	Accumulator.Delete_member(*big.NewInt(126) )
+	fmt.Println("Acc", Accumulator)
 
 }
