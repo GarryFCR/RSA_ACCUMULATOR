@@ -18,7 +18,7 @@ func main() {
 
 	//Generate the accumulator for th above set
 	Accumulator := Acc.Generate_Acc(key, U)
-	fmt.Println("Acc:", Accumulator)
+	fmt.Println("Accumulator:", Accumulator)
 	/*
 		//witness of a member
 		W1 := Acc.Generate_witness(*big.NewInt(125), key, U)
@@ -46,17 +46,18 @@ func main() {
 	Accumulator.Add_member(*big.NewInt(127), w)
 	//fmt.Println("Acc:", Accumulator)
 
-	//Accumulator.Delete_member(*big.NewInt(126))
-	//fmt.Println("Acc", Accumulator)
-
 	//w.Precompute_witness(Accumulator.G, Accumulator.U, Accumulator)
-	fmt.Println("witness", w.List)
-	fmt.Println("Set:", Accumulator.U)
-	/*
-		W3 := Acc.Generate_witness(*big.NewInt(123), key, Accumulator.U)
-		W4 := Acc.Generate_witness(*big.NewInt(124), key, Accumulator.U)
-		W5 := Acc.Generate_witness(*big.NewInt(125), key, Accumulator.U)
-		W6 := Acc.Generate_witness(*big.NewInt(127), key, Accumulator.U)
-		fmt.Println("witnesses:", W3, W4, W5, W6)
-	*/
+	fmt.Println("witness map after adding 127", w.List)
+	//fmt.Println("Set:", Accumulator.U)
+
+	Accumulator.Delete_member(*big.NewInt(126), w)
+	fmt.Println("Acc after deleting 126", Accumulator.U)
+	fmt.Println("witness map after adding 126", w.List)
+
+	W3 := Acc.Generate_witness(*big.NewInt(123), key, Accumulator.U)
+	W4 := Acc.Generate_witness(*big.NewInt(124), key, Accumulator.U)
+	W5 := Acc.Generate_witness(*big.NewInt(125), key, Accumulator.U)
+	W6 := Acc.Generate_witness(*big.NewInt(127), key, Accumulator.U)
+	fmt.Println("witnesses:", W3, W4, W5, W6)
+
 }

@@ -3,7 +3,7 @@ package verification
 import (
 	"math/big"
 
-	Acc "../Acc"
+	"../Acc"
 )
 
 //Verification is simply
