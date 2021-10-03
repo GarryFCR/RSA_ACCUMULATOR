@@ -28,11 +28,12 @@ func Rsa_keygen(lambda int) Rsa_key {
 
 	pk, _ := rsa.GenerateKey(rand.Reader, lambda)
 	var F *big.Int
+	var err error
 	N := pk.PublicKey.N
 
 	for {
-		F, _ = rand.Int(rand.Reader, N)
-		if new(big.Int).GCD(nil, nil, F, N).Cmp(big.NewInt(1)) == 0 {
+		F, err = rand.Int(rand.Reader, N)
+		if new(big.Int).GCD(nil, nil, F, N).Cmp(big.NewInt(1)) == 0 && err == nil {
 			break
 		}
 	}

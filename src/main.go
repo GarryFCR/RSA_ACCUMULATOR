@@ -14,7 +14,7 @@ func main() {
 	//generate N for the RSA group
 	//generate G from RSA group
 	//key is then sent to user
-	key := Acc.Rsa_keygen(12)
+	key := Acc.Rsa_keygen(32)
 	fmt.Println("Public Key:", &key)
 
 	//User off-chain----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ func main() {
 	Accumulator := Acc.Generate_Acc(key, U)
 	fmt.Println("Accumulator:", Accumulator)
 
-	//pre computation of witness
+	//Initialising of witness
 	list1 := make(map[string]big.Int, len(Accumulator.U))
 	w := &Acc.Witness_list{Acc: Accumulator.Acc, List: list1}
 

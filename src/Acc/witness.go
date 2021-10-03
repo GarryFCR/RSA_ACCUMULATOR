@@ -9,27 +9,6 @@ type Witness_list struct {
 	List map[string]big.Int
 }
 
-//Generation of witness is multiplication of all primes mapped from members except the one we
-//are proving,prod(say) then,
-// Witness = G^prod(mod N)
-func Generate_witness(u big.Int, key Rsa_key, U []big.Int) big.Int {
-
-	N := key.N
-
-	Primes := make([]big.Int, len(U))
-	G := key.G
-	for i, u_dash := range U {
-		Primes[i] = Hprime(u_dash)
-		if u_dash.Cmp(&u) != 0 {
-
-			G.Exp(&G, &Primes[i], &N)
-		}
-
-	}
-
-	return G
-}
-
 //Whenever the set is passed or it changes there is a computation of new witnesses
 func (witness *Witness_list) Precompute_witness(G_prev big.Int, U []big.Int, accumulator *Rsa_Acc) {
 
@@ -47,6 +26,7 @@ func (witness *Witness_list) Precompute_witness(G_prev big.Int, U []big.Int, acc
 
 	for _, u := range B {
 		e1 := Hprime(u)
+
 		G1.Exp(&G1, &e1, &N)
 	}
 
@@ -54,7 +34,7 @@ func (witness *Witness_list) Precompute_witness(G_prev big.Int, U []big.Int, acc
 		e2 := Hprime(w)
 		G2.Exp(&G2, &e2, &N)
 	}
-
+	//fmt.Println(G1, G2)
 	witness.Precompute_witness(G1, A, accumulator)
 	witness.Precompute_witness(G2, B, accumulator)
 }
