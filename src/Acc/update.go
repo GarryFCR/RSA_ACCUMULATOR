@@ -7,12 +7,24 @@ import (
 func (c *Rsa_Acc) Add_member(u big.Int, w *Witness_list) {
 
 	e := Hprime(u)
-	newAcc := new(big.Int).Exp(&c.Acc, &e, &c.N)
+	preAcc := c.Acc
 
+	newAcc := new(big.Int).Exp(&c.Acc, &e, &c.N)
 	newSet := append(c.U[:], u)
+
 	c.Acc = *newAcc
 	c.U = newSet
-	w.Precompute_witness(c.G, c.U, c)
+
+	if len(w.List) == 0 {
+		w.Precompute_witness(c.G, c.U, c)
+	} else {
+		for _, x := range c.U {
+			temp := w.List[x.String()]
+			w.List[x.String()] = *new(big.Int).Exp(&temp, &e, &c.N)
+		}
+		w.List[u.String()] = preAcc
+
+	}
 
 }
 

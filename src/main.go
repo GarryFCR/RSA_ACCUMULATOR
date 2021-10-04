@@ -30,6 +30,9 @@ func main() {
 	list1 := make(map[string]big.Int, len(Accumulator.U))
 	w := &Acc.Witness_list{Acc: Accumulator.Acc, List: list1}
 
+	//Precompute witness--------------------------------------------------------------------------
+	w.Precompute_witness(Accumulator.G, Accumulator.U, Accumulator)
+
 	//Adding a member
 	Accumulator.Add_member(*big.NewInt(127), w)
 	fmt.Println("witness map after adding 127", w.List)
