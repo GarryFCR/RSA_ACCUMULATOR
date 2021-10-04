@@ -29,7 +29,7 @@ func main() {
 	//Initialising of witness
 	w := Accumulator.Witness_int()
 
-	//Precompute witness--------------------------------------------------------------------------
+	//Precompute witness
 	w.Precompute_witness(Accumulator.G, Accumulator.U, Accumulator)
 
 	//Adding a member
