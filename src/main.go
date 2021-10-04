@@ -27,8 +27,7 @@ func main() {
 	fmt.Println("Accumulator:", Accumulator)
 
 	//Initialising of witness
-	list1 := make(map[string]big.Int, len(Accumulator.U))
-	w := &Acc.Witness_list{Acc: Accumulator.Acc, List: list1}
+	w := Accumulator.Witness_int()
 
 	//Precompute witness--------------------------------------------------------------------------
 	w.Precompute_witness(Accumulator.G, Accumulator.U, Accumulator)
@@ -47,7 +46,8 @@ func main() {
 
 	//Verifier on-chain------------------------------------------------------------------------
 	//Verification
-	if verify.Verify(*big.NewInt(125), W1, Accumulator.Acc, key.N) {
+	args := []big.Int{*big.NewInt(125), W1, Accumulator.Acc, key.N}
+	if verify.Verify(args) {
 		fmt.Printf("%v is a valid member\n", big.NewInt(125))
 	} else {
 		fmt.Printf("%v is not a member\n", big.NewInt(125))

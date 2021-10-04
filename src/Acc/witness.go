@@ -9,6 +9,13 @@ type Witness_list struct {
 	List map[string]big.Int
 }
 
+func (c *Rsa_Acc) Witness_int() *Witness_list {
+
+	list := make(map[string]big.Int, len(c.U))
+	return &Witness_list{Acc: c.Acc, List: list}
+
+}
+
 //Whenever the set is passed or it changes there is a computation of new witnesses
 func (witness *Witness_list) Precompute_witness(G_prev big.Int, U []big.Int, accumulator *Rsa_Acc) {
 
