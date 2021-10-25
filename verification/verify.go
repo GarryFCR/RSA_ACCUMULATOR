@@ -3,7 +3,7 @@ package verification
 import (
 	"math/big"
 
-	"../Acc"
+	"github.com/man2706kum/RSA_ACCUMULATOR/Acc"
 )
 
 //Verification is simply

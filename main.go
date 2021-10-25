@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"math/big"
 
-	"./Acc"
-	verify "./verification"
+	"github.com/man2706kum/RSA_ACCUMULATOR/Acc"
+	verify "github.com/man2706kum/RSA_ACCUMULATOR/verification"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 	//generate G from RSA group
 	//key is then sent to user
 	key := Acc.Rsa_keygen(32)
-	fmt.Println("Public Key:", &key)
+	fmt.Println("Public Key (N, G):", &key)
 
 	//User off-chain----------------------------------------------------------------------------
 	//Example set
@@ -24,7 +24,7 @@ func main() {
 	//Generate the accumulator for the above set
 	//send Acc to verifier
 	Accumulator := Acc.Generate_Acc(key, U)
-	fmt.Println("Accumulator:", Accumulator)
+	fmt.Println("\n\nAccumulator(Acc, U, N, G):", Accumulator)
 
 	//Initialising of witness
 	w := Accumulator.Witness_int()
@@ -34,11 +34,11 @@ func main() {
 
 	//Adding a member
 	Accumulator.Add_member(*big.NewInt(127), w)
-	fmt.Println("witness map after adding 127", w.List)
+	fmt.Println("\n\nwitness map after adding 127: ", w.List)
 
 	//Deleting a member
 	Accumulator.Delete_member(*big.NewInt(126), w)
-	fmt.Println("witness map after removing 126", w.List)
+	fmt.Println("\n\nwitness map after removing 126: ", w.List)
 
 	//Witness for a member
 	//send (witness,member) to verifier
@@ -47,6 +47,7 @@ func main() {
 	//Verifier on-chain------------------------------------------------------------------------
 	//Verification
 	args := []big.Int{*big.NewInt(125), W1, Accumulator.Acc, key.N}
+	fmt.Println("\n\nChecking if 125 is a valid member...")
 	if verify.Verify(args) {
 		fmt.Printf("%v is a valid member\n", big.NewInt(125))
 	} else {
