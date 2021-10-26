@@ -1,11 +1,13 @@
 package main
 
+/*
 import (
+	"crypto/rand"
 	"fmt"
 	"math/big"
 
-	"github.com/man2706kum/RSA_ACCUMULATOR/Acc"
-	verify "github.com/man2706kum/RSA_ACCUMULATOR/verification"
+	"github.com/GarryFCR/RSA_ACCUMULATOR/Acc"
+	verify "github.com/GarryFCR/RSA_ACCUMULATOR/verification"
 )
 
 func main() {
@@ -54,4 +56,9 @@ func main() {
 		fmt.Printf("%v is not a member\n", big.NewInt(125))
 	}
 
+	p, _ := rand.Prime(rand.Reader, 1024)
+	xxx := Acc.Hprime(*p)
+	fmt.Println(p, xxx.BitLen(), xxx.ProbablyPrime(20))
+
 }
+*/
