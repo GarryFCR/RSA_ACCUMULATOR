@@ -7,8 +7,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/GarryFCR/RSA_ACCUMULATOR/Acc"
-	verify "github.com/GarryFCR/RSA_ACCUMULATOR/verification"
+	"github.com/GarryFCR/RSA_ACCUMULATOR/Rsa_accumulator"
+	//verify "github.com/GarryFCR/RSA_ACCUMULATOR/verification"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	auth "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
@@ -20,21 +20,21 @@ const (
 
 var (
 	source  = rand.NewSource(time.Now().UnixNano())
-	key     = Acc.Rsa_keygen(512) //group order should be greater than the elements
+	key     = Rsa_accumulator.Rsa_keygen(2048) //group order should be greater than the elements
 	letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
 	random  = rand.New(source)
 )
 
 func main() {
 
-	fmt.Println("For set size:", sliceLength)
+	fmt.Println("For set size:", sliceLength, key.N.BitLen())
 	for loop := 0; loop < loops; loop++ {
 		array := make([]big.Int, sliceLength)
 		for i, _ := range array {
 			array[i] = *big.NewInt(0).SetBytes(randomAddress().Bytes())
 		}
 		start1 := time.Now()
-		Accumulator := Acc.Generate_Acc(key, array)
+		Accumulator := Rsa_accumulator.Generate_Acc(key, array)
 		w := Accumulator.Witness_int()
 		elapsed1 := time.Since(start1)
 		log.Printf("Accumulator generation time :%s", elapsed1)
@@ -60,13 +60,13 @@ func randomAddress() sdk.AccAddress {
 	return auth.NewModuleAddress(string(b))
 }
 
-func check(original []big.Int, w *Acc.Witness_list, Accumulator *Acc.Rsa_Acc) (int, int, int) {
+func check(original []big.Int, w *Rsa_accumulator.Witness_list, Accumulator *Rsa_accumulator.Rsa_Acc) (int, int, int) {
 	t := 0
 	fp := 0
 	fn := 0
 	for _, c := range original {
 		args := []big.Int{c, w.List[c.String()], Accumulator.Acc, key.N}
-		if verify.Verify(args) {
+		if Rsa_accumulator.Verify(args) {
 			t++
 		} else {
 			fn++
@@ -75,7 +75,7 @@ func check(original []big.Int, w *Acc.Witness_list, Accumulator *Acc.Rsa_Acc) (i
 	for i := 0; i < sliceLength; i++ {
 		a := *big.NewInt(0).SetBytes(randomAddress().Bytes())
 		args := []big.Int{a, w.List[a.String()], Accumulator.Acc, key.N}
-		if verify.Verify(args) {
+		if Rsa_accumulator.Verify(args) {
 			fp++
 		}
 	}

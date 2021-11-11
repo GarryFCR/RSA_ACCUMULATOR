@@ -6,7 +6,7 @@
 	the prime is ensured using Cramer's conjecture
 */
 
-package Acc
+package Rsa_accumulator
 
 import (
 	"math"

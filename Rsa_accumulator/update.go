@@ -1,4 +1,4 @@
-package Acc
+package Rsa_accumulator
 
 import (
 	"math/big"
