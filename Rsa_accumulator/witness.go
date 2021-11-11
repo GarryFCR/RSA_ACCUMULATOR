@@ -4,11 +4,13 @@ import (
 	"math/big"
 )
 
+//For storing Witnesses
 type Witness_list struct {
 	Acc  big.Int
 	List map[string]big.Int
 }
 
+//Initializes a witness mapping
 func (c *Rsa_Acc) Witness_int() *Witness_list {
 
 	list := make(map[string]big.Int, len(c.U))
@@ -16,7 +18,7 @@ func (c *Rsa_Acc) Witness_int() *Witness_list {
 
 }
 
-//Whenever the set is passed or it changes there is a computation of new witnesses
+//Whenever the set is passed or it changes there is a computation of new witnesses which takes O(nlogn)
 func (witness *Witness_list) Precompute_witness(G_prev big.Int, U []big.Int, accumulator *Rsa_Acc) {
 
 	if len(U) == 1 {

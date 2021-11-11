@@ -3,7 +3,9 @@ package Rsa_accumulator
 import (
 	"math/big"
 )
-
+/*
+	Adding new member to the set which autometically precomputes the all the Witnesses in O(n) time
+*/
 func (c *Rsa_Acc) Add_member(u big.Int, w *Witness_list) {
 
 	e := Hprime(u)
@@ -27,7 +29,9 @@ func (c *Rsa_Acc) Add_member(u big.Int, w *Witness_list) {
 	}
 
 }
-
+/*
+	Deleting a member from the set in O(nlogn) time
+*/
 func (c *Rsa_Acc) Delete_member(u big.Int, w *Witness_list) {
 
 	var newSet []big.Int
